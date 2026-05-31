@@ -19,9 +19,6 @@ persist.vendor.sys.camera.  u:object_r:vendor_camera_prop:s0
 # GPS
 ro.spid.gps.                u:object_r:vendor_gps_prop:s0
 
-# NFC
-vendor.nfc.fw.              u:object_r:vendor_nfc_prop:s0
-
 # RADIO
 persist.ril.                u:object_r:radio_prop:s0
 vendor.gsm.                 u:object_r:vendor_radio_prop:s0
@@ -32,6 +29,7 @@ ro.factory.factory_binary   u:object_r:vendor_factory_prop:s0
 
 # Wlan
 vendor.wlan.               u:object_r:vendor_wlan_prop:s0
+vendor.wlbtd.              u:object_r:vendor_wlbtd_prop:s0
 
 # Hwc
 hwc.exynos.vsync_mode      u:object_r:vendor_hwc_prop:s0

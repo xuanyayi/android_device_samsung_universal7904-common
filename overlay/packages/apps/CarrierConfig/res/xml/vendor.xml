@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carrier_config_list>
+    <!-- Do not advertise VoLTE/UT until Samsung's private IMS stack is ported. -->
+</carrier_config_list>

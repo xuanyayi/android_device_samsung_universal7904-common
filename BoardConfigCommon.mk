@@ -39,7 +39,7 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
 
 # Kernel
-BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_KERNEL_IMAGE_NAME := Image-dtb
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
@@ -48,7 +48,6 @@ TARGET_KERNEL_ADDITIONAL_FLAGS += LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-o
 TARGET_KERNEL_ADDITIONAL_FLAGS := HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument"
 KERNEL_SUPPORTS_LLVM_TOOLS := true
 TARGET_KERNEL_OPTIONAL_LD := true
-TARGET_KERNEL_CLANG_VERSION := proton
 
 # HIDL
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
@@ -82,9 +81,7 @@ BOARD_HAS_DOWNLOAD_MODE := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # Sepolicy
-ifneq ($(LINEAGE_BUILD),)
 include device/lineage/sepolicy/exynos/sepolicy.mk
-endif
 include device/samsung_slsi/sepolicy/sepolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
 
@@ -104,5 +101,11 @@ BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 BOARD_HOSTAPD_DRIVER             := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
+# The Android 13 1.6 Wi-Fi service crashes in the SLSI legacy link-layer
+# stats path on SM-P205. Use Lineage's legacy service until the driver/HAL
+# statistics ABI is audited against the selected stock firmware baseline.
+WIFI_HIDL_FEATURE_DUAL_INTERFACE :=
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
+
+# VINTF Compatibility Matrix Override
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := device/samsung/universal7904-common/framework_compatibility_matrix.xml

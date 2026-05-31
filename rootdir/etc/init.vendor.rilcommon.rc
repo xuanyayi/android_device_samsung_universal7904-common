@@ -14,13 +14,13 @@ on post-fs-data
 on property:ro.vendor.multisim.simslotcount=1
     stop ril-daemon1
 
-service network_config /vendor/bin/secril_config_svc NetworkConfig
+service network_config /vendor/bin/secril_config_svc.p205 NetworkConfig
     user radio
     group radio
     oneshot
     disabled
 
-service sim_config /vendor/bin/secril_config_svc SimConfig
+service sim_config /vendor/bin/secril_config_svc.p205 SimConfig
     user radio
     group radio
     oneshot

@@ -152,7 +152,6 @@ on post-fs-data
 
 # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/mnt/vendor/efs/bluetooth/bt_addr"
-    chown bluetooth bluetooth ro.bt.bdaddr_path
 
 # for BT MAC address
     mkdir /mnt/vendor/efs/bluetooth 0770 system bluetooth
@@ -386,6 +385,20 @@ on fs
     chmod 0660 /sys/class/ion_cma/ion_video_ext/isolated
     chown system system /sys/class/ion_cma/ion_video_ext/isolated
 
+# Permission for USB SELECT
+    chown system system /sys/class/android_usb/android0/enable
+    chmod 0660 /sys/class/android_usb/android0/enable
+    chown system system /sys/class/android_usb/android0/idVendor
+    chmod 0660 /sys/class/android_usb/android0/idVendor
+    chown system system /sys/class/android_usb/android0/idProduct
+    chmod 0660 /sys/class/android_usb/android0/idProduct
+    chown system system /sys/class/android_usb/android0/f_diag/clients
+    chmod 0660 /sys/class/android_usb/android0/f_diag/clients
+    chown system system /sys/class/android_usb/android0/functions
+    chmod 0660 /sys/class/android_usb/android0/functions
+    chown system system /sys/class/android_usb/android0/bDeviceClass
+    chmod 0660 /sys/class/android_usb/android0/bDeviceClass
+
 # Sensors permissions
 # Flush
     chown system radio /sys/class/sensors/sensor_dev/flush
@@ -432,14 +445,6 @@ on fs
     chown system radio /sys/class/sensors/light_sensor/fifo_level
     chown system radio /sys/class/sensors/light_sensor/fifo_overflowx
     chown system radio /sys/class/sensors/light_sensor/fifo_reset
-# Gyro_sensor
-    chown system radio /sys/class/sensors/gyro_sensor/power_on
-    chown system radio /sys/class/sensors/gyro_sensor/power_off
-    chown system radio /sys/class/sensors/gyro_sensor/temperature
-    chown system radio /sys/class/sensors/gyro_sensor/selftest
-    chown system radio /sys/class/sensors/gyro_sensor/selftest_dps
-    chown system radio /sys/class/sensors/gyro_sensor/vendor
-    chown system radio /sys/class/sensors/gyro_sensor/name
 # Magnetic_sensor
     chown system radio /sys/class/sensors/magnetic_sensor/raw_data
     chown system radio /sys/class/sensors/magnetic_sensor/vendor
@@ -488,25 +493,6 @@ on fs
     chown system radio /sys/class/sensors/grip_sensor/grip_baseline
     chown system radio /sys/class/sensors/grip_sensor/grip_irq_count
 
-# Permissions for Fingerprint sensor
-    chmod 0660 /dev/goodix_fp
-    chmod 0660 /dev/esfp0
-    chown system system /dev/goodix_fp
-    chown system system /dev/esfp0
-    chown system radio /sys/class/fingerprint/fingerprint/type_check
-    chown system radio /sys/class/fingerprint/fingerprint/name
-    chown system radio /sys/class/fingerprint/fingerprint/vendor
-    chown system radio /sys/class/fingerprint/fingerprint/adm
-    chown system radio /sys/class/fingerprint/fingerprint/bfs_values
-
-# Permissions for System LSI NFC
-# NFC : Permissions for NFC
-        chmod 0660 /dev/sec-nfc
-        chown nfc nfc /dev/sec-nfc
-# Permissions for S.LSI ESE
-        chmod 0660 /dev/p3
-        chown system system /dev/p3
-
 on property:sys.boot_completed=1
     swapon_all /vendor/etc/fstab.enableswap
 
@@ -520,7 +506,7 @@ on property:sys.boot_completed=1
     write /proc/ecd/load_firmware 1
 
 # Abox FailSafe
-service abox /vendor/bin/main_abox 14a50000.abox /data/log/abox
+service abox /vendor/bin/main_abox 14a50000.abox /data/vendor/log/abox
    class late_start
    user audioserver
    group system

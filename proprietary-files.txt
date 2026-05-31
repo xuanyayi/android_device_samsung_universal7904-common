@@ -1,4 +1,4 @@
-# All blobs below are extracted from A405FNXXS4CWB5
+# All blobs below are extracted from P205DXS6CWA2
 
 # Audio
 -vendor/bin/main_abox
@@ -9,10 +9,12 @@ vendor/etc/mixer_gains.xml
 vendor/etc/mixer_paths.xml
 vendor/firmware/APBargeIn_AUDIO_SLSI.bin
 vendor/firmware/AP_AUDIO_SLSI.bin
+vendor/firmware/Tfa9872.cnt
 vendor/firmware/Tfa9896.cnt
 vendor/firmware/calliope_dram.bin
 vendor/firmware/calliope_sram.bin
 -vendor/lib/hw/audio.primary.exynos7904.so
+-vendor/lib/hw/audio.sec_primary.default.so
 -vendor/lib/libSamsungPostProcessConvertor.so
 -vendor/lib/lib_SamsungRec_07001.so
 -vendor/lib/lib_SoundAlive_SRC384_ver320.so
@@ -23,6 +25,7 @@ vendor/firmware/calliope_sram.bin
 -vendor/lib/libsamsungDiamondVoice.so
 -vendor/lib/libsecaudiocoreutils.so
 -vendor/lib/libsecaudioinfo.so
+-vendor/lib/libspeakercalibration.so
 -vendor/lib/soundfx/libaudioeffectoffload.so
 -vendor/lib/soundfx/libswdap.so
 -vendor/lib/vndk/libaudioroute.so;MODULE=libaudioroute.universal7904
@@ -31,11 +34,13 @@ vendor/firmware/calliope_sram.bin
 -vendor/lib64/libprofileparamstorage.so
 -vendor/lib64/libsecaudiocoreutils.so
 -vendor/lib64/libsecaudioinfo.so
+-vendor/lib64/libspeakercalibration.so
+-vendor/lib64/hw/audio.sec_primary.default.so
 -vendor/lib64/soundfx/libaudioeffectoffload.so
 -vendor/lib64/soundfx/libswdap.so
 
-# Audio - from A405FNXXS4CUH4
--vendor/lib/librecordalive.so|19ff35887cb416015cf39a5e364d9d3176be9b5a
+# Audio
+-vendor/lib/librecordalive.so
 
 # Camera
 -vendor/lib/camera.device@3.2-impl.so:vendor/lib/camera.device@3.2-impl.universal7904.so
@@ -131,7 +136,7 @@ vendor/firmware/mfc_fw.bin
 # RIL
 -vendor/bin/cbd
 -vendor/bin/hw/rild
-vendor/etc/init/init.vendor.onebinary.rc
+-vendor/bin/secril_config_svc;MODULE=secril_config_svc.p205
 vendor/etc/init/init.vendor.rilchip.rc
 vendor/etc/plmn_delta.bin
 vendor/etc/plmn_delta_attaio.bin
@@ -151,7 +156,6 @@ vendor/etc/plmn_se13.bin
 -vendor/lib64/libsecnativefeature.so
 -vendor/lib64/libsemnativecarrierfeature.so
 -vendor/lib64/libsecril-client.so;MODULE=libsecril-client.universal7904
--vendor/lib64/libsec-ril-dsds.so
 -vendor/lib64/libsec-ril.so
 -vendor/lib64/libvkmanager_vendor.so
 -vendor/lib64/vendor.samsung.hardware.radio.bridge@2.0.so
@@ -159,12 +163,8 @@ vendor/etc/plmn_se13.bin
 -vendor/lib64/vendor.samsung.hardware.radio@2.0.so
 -vendor/lib64/vendor.samsung.hardware.radio@2.1.so
 
-# Sensors
-vendor/etc/yas_set.cfg
--vendor/lib/libyasalgo.so
--vendor/lib64/libyasalgo.so
-
 # Wifi
+-vendor/bin/wlbtd
 vendor/etc/init/wifi_slsi.rc
 vendor/etc/wifi/hydra_config.sdb
 vendor/etc/wifi/indoorchannel.info
@@ -217,3 +217,6 @@ vendor/etc/wifi/mx140_t_wlan_t.hcf
 vendor/etc/wifi/mx140_wlan.hcf
 vendor/etc/wifi/mx140_wlan_t.hcf
 vendor/etc/wifi/platform.txt
+
+# Audio
+vendor/firmware/tfadsp.bin

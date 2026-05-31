@@ -16,13 +16,28 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_COPY_FILES += \
-    frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
+    frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
+    frameworks/av/services/audiopolicy/enginedefault/config/example/phone/audio_policy_engine_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_configuration.xml \
+    frameworks/av/services/audiopolicy/enginedefault/config/example/phone/audio_policy_engine_default_stream_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_default_stream_volumes.xml \
+    frameworks/av/services/audiopolicy/enginedefault/config/example/phone/audio_policy_engine_product_strategies.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_product_strategies.xml \
+    frameworks/av/services/audiopolicy/enginedefault/config/example/phone/audio_policy_engine_stream_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_stream_volumes.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
+
+# TFA speaker amplifier firmware is requested before vendor is mounted.
+PRODUCT_COPY_FILES += \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/Tfa9872.cnt:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/Tfa9872.cnt \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/Tfa9896.cnt:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/Tfa9896.cnt \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/tfadsp.bin:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/tfadsp.bin
+
+PRODUCT_COPY_FILES += \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/Tfa9872.cnt:$(TARGET_COPY_OUT_RECOVERY)/root/lib/firmware/Tfa9872.cnt \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/Tfa9896.cnt:$(TARGET_COPY_OUT_RECOVERY)/root/lib/firmware/Tfa9896.cnt \
+    vendor/samsung/universal7904-common/proprietary/vendor/firmware/tfadsp.bin:$(TARGET_COPY_OUT_RECOVERY)/root/lib/firmware/tfadsp.bin
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -41,8 +56,23 @@ TARGET_SCREEN_WIDTH := 1200
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.5-service.universal7904 \
-    camera.exynos7904
+    camera.device@1.0-impl \
+    camera.device@3.2-impl \
+    camera.device@3.3-impl \
+    camera.device@3.4-impl \
+    camera.device@3.5-impl \
+    android.hardware.camera.device@3.6.vendor \
+    android.hardware.camera.provider@2.4.vendor \
+    android.hardware.camera.provider@2.5.vendor \
+    android.hardware.camera.provider@2.6.vendor \
+    android.hardware.graphics.mapper@4.0.vendor \
+    libexif.vendor \
+    libfmq.vendor \
+    libgralloctypes.vendor
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -90,6 +120,10 @@ PRODUCT_PACKAGES += \
     libhwbinder.vendor \
     libunwindstack.vendor
 
+# USB
+PRODUCT_PACKAGES += \
+    android.hardware.usb-service.samsung
+
 # Init
 PRODUCT_PACKAGES += \
     fstab.enableswap \
@@ -100,9 +134,9 @@ PRODUCT_PACKAGES += \
     ueventd.exynos7904.rc \
     wifi_sec.rc
 
-# Keylayout
+# Input
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/keylayout/uinput-sec-fp.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-sec-fp.kl
+    $(LOCAL_PATH)/configs/idc/sec_e-pen.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/sec_e-pen.idc
 
 # Light
 PRODUCT_PACKAGES += \
@@ -133,25 +167,11 @@ PRODUCT_ENFORCE_RRO_TARGETS += *
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
-    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_NFC/android.hardware.nfc.hce.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hcef.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_NFC/android.hardware.nfc.hcef.xml \
-    frameworks/native/data/etc/android.hardware.nfc.uicc.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_NFC/android.hardware.nfc.uicc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_NFC/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
-    frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
@@ -161,7 +181,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
+    $(LOCAL_PATH)/configs/permissions/wisdom_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/wisdom_core_hardware.xml \
     $(LOCAL_PATH)/configs/permissions/platform-samsung.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/platform-samsung.xml \
 
 # Power
@@ -191,9 +211,6 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.2.vendor \
     android.hardware.radio.deprecated@1.0.vendor
 
-PRODUCT_PACKAGES += \
-    secril_config_svc
-
 # SamsungDoze
 PRODUCT_PACKAGES += \
     SamsungDoze
@@ -213,10 +230,6 @@ PRODUCT_PACKAGES += \
     libcamera_metadata_helper \
     libshim_audioparams \
     libshim_sensorndkbridge
-
-# Skip Mount
-PRODUCT_PACKAGES += \
-    gsi_skip_mount.cfg
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -250,10 +263,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
-# USB
-PRODUCT_PACKAGES += \
-    android.hardware.usb-service.samsung
-
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-service.samsung
@@ -264,7 +273,7 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
+    android.hardware.wifi@1.0-service.legacy \
     hostapd \
     WifiOverlay \
     wpa_supplicant

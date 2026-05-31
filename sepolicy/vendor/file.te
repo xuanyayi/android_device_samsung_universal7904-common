@@ -11,11 +11,13 @@ type debugfs_ion_dma, fs_type, debugfs_type;
 type proc_swapiness, fs_type, proc_type;
 
 # data types
+type camera_vendor_data_file, file_type, data_file_type;
 type mediadrm_data_file, file_type, data_file_type;
-type nfc_vendor_data_file, file_type, data_file_type;
+type vendor_wlbtd_log_file, file_type, data_file_type;
 
 # sysfs types
 type sysfs_abox_writable, sysfs_type, rw_fs_type, fs_type;
+type sysfs_block, sysfs_type, r_fs_type, fs_type;
 type sysfs_block_writable, sysfs_type, rw_fs_type, fs_type;
 type sysfs_sensor_writable, sysfs_type, rw_fs_type, fs_type;
 type sysfs_input_writable, sysfs_type, rw_fs_type, fs_type;
@@ -35,3 +37,4 @@ type sysfs_camera, fs_type, sysfs_type;
 type sysfs_ss_writable, sysfs_type, rw_fs_type, fs_type;
 type sysfs_gpu_writable, sysfs_type, rw_fs_type, fs_type;
 type sysfs_info, sysfs_type, r_fs_type, fs_type;
+type vendor_wlbtd_debugfs, fs_type, debugfs_type;

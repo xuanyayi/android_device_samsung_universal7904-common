@@ -177,6 +177,9 @@
 /dev/vertex0             0660   media      media
 /dev/vertex1             0660   media      media
 
+# Samsung MTP gadget
+/dev/usb_mtp_gadget      0660   root       mtp
+
 #SCSC Bluetooth
 /dev/scsc_h4_0           0660   bluetooth  bluetooth
 
