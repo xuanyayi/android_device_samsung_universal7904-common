@@ -40,7 +40,7 @@ function blob_fixup {
 	vendor/lib*/camera.device@*-impl.p205.so | \
 	vendor/lib*/vendor.samsung.hardware.camera.provider@4.0.p205.so)
 		"$PATCHELF" --set-soname "$(basename "$2")" "$2"
-		if [ "${DEVICE}" = "p205" ]; then
+		if [ "${DEVICE}" = "wisdom" ]; then
 			"$PATCHELF" --replace-needed \
 				"android.hardware.camera.provider@2.4-legacy.so" \
 				"android.hardware.camera.provider@2.4-legacy.p205.so" "$2"
@@ -68,7 +68,7 @@ function blob_fixup {
 	vendor/lib*/hw/vendor.samsung.hardware.camera.provider@4.0-impl.so | \
 	vendor/lib*/vendor.samsung.hardware.camera.provider@4.0-legacy.so | \
 	vendor/lib*/vendor.samsung.hardware.camera.device@5.0-impl.so)
-		if [ "${DEVICE}" = "p205" ]; then
+		if [ "${DEVICE}" = "wisdom" ]; then
 			"$PATCHELF" --replace-needed \
 				"android.hardware.camera.provider@2.4-legacy.so" \
 				"android.hardware.camera.provider@2.4-legacy.p205.so" "$2"
