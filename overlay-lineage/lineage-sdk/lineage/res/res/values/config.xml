@@ -6,6 +6,9 @@
 <resources>
     <bool name="config_haveHigherAspectRatioScreen">true</bool>
 
+    <!-- SM-P205 has no mDNIe sysfs backend; do not expose LiveDisplay. -->
+    <bool name="config_enableLiveDisplay">false</bool>
+
     <!-- Defines the actions shown in advanced reboot submenu -->
     <string-array name="config_restartActionsList">
         <item>restart</item>
@@ -13,4 +16,5 @@
         <item>restart_download</item>
         <item>restart_fastboot</item>
      </string-array>
+
 </resources>

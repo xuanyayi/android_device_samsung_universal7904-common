@@ -10,9 +10,6 @@ on init
     # Charger
     chown system system /sys/class/power_supply/battery/batt_slate_mode
 
-    # Fastcharge
-    chown system radio /sys/class/sec/switch/afc_disable
-
     # ZRAM parameters
     write /proc/sys/vm/page-cluster 0
     write /proc/sys/vm/swappiness 100
@@ -105,6 +102,12 @@ on post-fs-data
 # Permissions for LCD
     chown system radio /sys/class/lcd/panel/lcd_type
     chown system system /sys/class/lcd/panel/lux
+
+# Permissions for touchscreen factory commands
+    chown system radio /sys/class/sec/tsp/cmd
+    chmod 0220 /sys/class/sec/tsp/cmd
+    chown system system /sys/class/sec/tsp/input/enabled
+    chmod 0660 /sys/class/sec/tsp/input/enabled
 
 # Permissions Camera
     mkdir /data/vendor/camera 0770 cameraserver system
@@ -495,6 +498,13 @@ on fs
 
 on property:sys.boot_completed=1
     swapon_all /vendor/etc/fstab.enableswap
+
+    # The touchscreen factory node can appear after post-fs-data on SM-P205.
+    # Re-apply ownership before SamsungDoze replays DOUBLE_TAP_TO_WAKE.
+    chown system radio /sys/class/sec/tsp/cmd
+    chmod 0220 /sys/class/sec/tsp/cmd
+    chown system system /sys/class/sec/tsp/input/enabled
+    chmod 0660 /sys/class/sec/tsp/input/enabled
 
 # Permission for flashlight control for HAL3.3
 # The Istor espresso board does not have the flash led h/w, So the below permission line are blocked.

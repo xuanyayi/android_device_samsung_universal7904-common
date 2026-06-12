@@ -1,1 +1,3 @@
-dontaudit secril_config_svc property_type:property_service set;
+get_prop(secril_config_svc, exported_system_prop)
+set_prop(secril_config_svc, radio_prop)
+set_prop(secril_config_svc, vendor_radio_prop)

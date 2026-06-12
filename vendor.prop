@@ -44,10 +44,10 @@ vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 
 # LTE/GSM/WCDMA. This build does not ship IMS/VoLTE, so normal calls use the
 # Samsung RIL's non-IMS CS path. Keeping LTE in the default mode preserves
-# service on LTE-only coverage and still allows carrier/network CS fallback
-# where the operator supports it.
+# service on LTE-only coverage and allows call-time 3G fallback handling.
 ro.telephony.default_network=9
 ro.vendor.radio.default_network=9
+ro.vendor.radio.default_network_by=telephony.prop_9
 
 # Samsung Specific Properties
 ro.product_ship=true

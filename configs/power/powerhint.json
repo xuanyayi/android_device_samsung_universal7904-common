@@ -37,7 +37,8 @@
                 "1",
                 "0"
             ],
-            "ResetOnInit": true
+            "DefaultIndex": 1,
+            "ResetOnInit": false
         },
         {
             "Name": "DoubleTapToWakeEnable",
