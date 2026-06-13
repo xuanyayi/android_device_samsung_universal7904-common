@@ -288,6 +288,7 @@ PRODUCT_PACKAGES += \
     PhhIms
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/default-permissions-me.phh.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/default-permissions/default-permissions-me.phh.ims.xml \
     $(LOCAL_PATH)/configs/permissions/privapp-permissions-me.phh.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-me.phh.ims.xml
 
 # Temporary PhhIms bring-up helpers. These are not a replacement for
