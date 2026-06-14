@@ -75,9 +75,6 @@ on boot
     # race this device's configfs layout and break USB function switching.
     setprop sys.usb.configfs 2
 
-on boot && property:persist.sys.usb.config=none
-    setprop persist.sys.usb.config mtp,adb
-
 # Used to disable USB when switching states
 on property:sys.usb.config=none
     write /sys/class/android_usb/android0/enable 0

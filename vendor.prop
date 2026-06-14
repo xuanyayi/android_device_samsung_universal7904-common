@@ -12,7 +12,6 @@ bluetooth.profile.opp.enabled=true
 bluetooth.profile.pan.nap.enabled=true
 bluetooth.profile.pan.panu.enabled=true
 bluetooth.profile.pbap.server.enabled=true
-persist.bluetooth.enablenewavrcp=false
 
 ## Dalvik
 dalvik.vm.lockprof.threshold=500
@@ -24,9 +23,6 @@ debug.fdsan=warn_once
 ## FRP
 # Disable invocation of oem_lock
 ro.frp.pst=/dev/block/persistent
-
-## Fastbootd
-ro.fastbootd.available=true
 
 ## OMX
 # Set csc support in OMX
@@ -48,9 +44,6 @@ vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 ro.telephony.default_network=9
 ro.vendor.radio.default_network=9
 ro.vendor.radio.default_network_by=telephony.prop_9
-
-# Samsung Specific Properties
-ro.product_ship=true
 
 ## SoC
 ro.soc.manufacturer=Samsung

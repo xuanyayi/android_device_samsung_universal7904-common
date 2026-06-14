@@ -12,7 +12,7 @@ on post-fs-data
     restorecon -R /data/vendor/secradio
 
 on property:ro.vendor.multisim.simslotcount=1
-    stop ril-daemon1
+    stop vendor.ril-daemon1
 
 service network_config /vendor/bin/secril_config_svc.p205 NetworkConfig
     user radio
