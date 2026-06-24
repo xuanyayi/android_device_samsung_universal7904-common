@@ -1,8 +1,2 @@
 # RADIO
 ro.multisim.                u:object_r:radio_prop:s0
-
-# Recovery USB VID/PID defaults are generated into vendor/build.prop by
-# base_vendor.mk, so vendor_init needs a concrete writable property type.
-ro.recovery.usb.vid         u:object_r:recovery_config_prop:s0 exact string
-ro.recovery.usb.adb.pid     u:object_r:recovery_config_prop:s0 exact string
-ro.recovery.usb.fastboot.pid u:object_r:recovery_config_prop:s0 exact string

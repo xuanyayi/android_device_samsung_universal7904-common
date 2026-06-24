@@ -45,3 +45,9 @@ prebuilt_etc {
     relative_install_path: "init",
     vendor: true,
 }
+
+sh_binary {
+    name: "init_sensor_factory",
+    src: "bin/init_sensor_factory",
+    vendor: true,
+}

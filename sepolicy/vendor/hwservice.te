@@ -1,3 +1,2 @@
-type hal_sec_radio_hwservice, hwservice_manager_type;
-type hal_sec_radio_bridge_hwservice, hwservice_manager_type;
-type hal_sec_radio_channel_hwservice, hwservice_manager_type;
+# Samsung radio HIDL hwservices are labeled as hal_telephony_hwservice by
+# device/samsung_slsi/sepolicy on LineageOS 22.2.

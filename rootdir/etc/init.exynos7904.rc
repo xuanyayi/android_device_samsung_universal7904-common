@@ -84,10 +84,30 @@ on post-fs-data
     chown system audio /sys/class/nxp/tfa_log/count_overxmax
     chown system audio /sys/class/nxp/tfa_log/data_maxt
     chown system audio /sys/class/nxp/tfa_log/count_overtmax
+    # The stock blackbox logger command is rejected by this ABOX TFADSP firmware
+    # and makes the first speaker cold-start fail. Keep playback usable by
+    # disabling it at boot; the sysfs log counters remain readable.
+    write /sys/class/nxp/tfa_log/enable 0
     chmod 0440 /sys/class/nxp/tfa_log/data_maxx
     chmod 0440 /sys/class/nxp/tfa_log/count_overxmax
     chmod 0440 /sys/class/nxp/tfa_log/data_maxt
     chmod 0440 /sys/class/nxp/tfa_log/count_overtmax
+
+# SensorHub factory calibration directory
+    mkdir /mnt/vendor/efs/FactoryApp 0775 system system
+    restorecon_recursive /mnt/vendor/efs/FactoryApp
+    chown system system /mnt/vendor/efs/FactoryApp
+    chmod 0775 /mnt/vendor/efs/FactoryApp
+    exec_start init_sensor_factory
+    restorecon_recursive /mnt/vendor/efs/FactoryApp
+    chown system radio /mnt/vendor/efs/FactoryApp/version
+    chown system radio /mnt/vendor/efs/FactoryApp/predefine0
+    chown system radio /mnt/vendor/efs/FactoryApp/predefine1
+    chown system radio /mnt/vendor/efs/FactoryApp/predefine2
+    chmod 0664 /mnt/vendor/efs/FactoryApp/version
+    chmod 0664 /mnt/vendor/efs/FactoryApp/predefine0
+    chmod 0664 /mnt/vendor/efs/FactoryApp/predefine1
+    chmod 0664 /mnt/vendor/efs/FactoryApp/predefine2
 
 # Change permission for A-Box firmware logs file & GPR dump
     chown audioserver system /sys/kernel/debug/abox/log-00
@@ -104,9 +124,9 @@ on post-fs-data
     chown system system /sys/class/lcd/panel/lux
 
 # Permissions for touchscreen factory commands
-    chown system radio /sys/class/sec/tsp/cmd
+    chown root system /sys/class/sec/tsp/cmd
     chmod 0220 /sys/class/sec/tsp/cmd
-    chown system system /sys/class/sec/tsp/input/enabled
+    chown root system /sys/class/sec/tsp/input/enabled
     chmod 0660 /sys/class/sec/tsp/input/enabled
 
 # Permissions Camera
@@ -271,28 +291,29 @@ on boot
     chmod 0664 /sys/devices/platform/11500000.mali/dvfs_max_lock
 
     # Change permission for interactive governor
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/input_boost
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/input_boost
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/input_boost
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
@@ -303,28 +324,29 @@ on boot
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "19000 1248000:39000"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 40000
 
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_rate
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_rate
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_slack
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_slack
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_slack
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/min_sample_time
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/min_sample_time
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/min_sample_time
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/hispeed_freq
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/hispeed_freq
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/target_loads
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/target_loads
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/go_hispeed_load
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/go_hispeed_load
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/above_hispeed_delay
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/above_hispeed_delay
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boost
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boost
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/boost
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/input_boost
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse
+    chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/input_boost
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/input_boost
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse_duration
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse_duration
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/boostpulse_duration
-    chown system system /sys/devices/system/cpu/cpu6/cpufreq/interactive/io_is_busy
+    chown root system /sys/devices/system/cpu/cpu6/cpufreq/interactive/io_is_busy
     chmod 0660 /sys/devices/system/cpu/cpu6/cpufreq/interactive/io_is_busy
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/hispeed_freq 1144000
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/target_loads 80
@@ -382,6 +404,7 @@ on fs
 
     chown radio system /mnt/vendor/efs
     chmod 0771 /mnt/vendor/efs
+
     chown system system /mnt/vendor/persist
 
 # Permissions for ION
@@ -496,14 +519,21 @@ on fs
     chown system radio /sys/class/sensors/grip_sensor/grip_baseline
     chown system radio /sys/class/sensors/grip_sensor/grip_irq_count
 
+service init_sensor_factory /vendor/bin/init_sensor_factory
+    user system
+    group system
+    oneshot
+    disabled
+
 on property:sys.boot_completed=1
     swapon_all /vendor/etc/fstab.enableswap
+    setprop vendor.powerhal.init 1
 
     # The touchscreen factory node can appear after post-fs-data on SM-P205.
     # Re-apply ownership before SamsungDoze replays DOUBLE_TAP_TO_WAKE.
-    chown system radio /sys/class/sec/tsp/cmd
+    chown root system /sys/class/sec/tsp/cmd
     chmod 0220 /sys/class/sec/tsp/cmd
-    chown system system /sys/class/sec/tsp/input/enabled
+    chown root system /sys/class/sec/tsp/input/enabled
     chmod 0660 /sys/class/sec/tsp/input/enabled
 
 # Permission for flashlight control for HAL3.3

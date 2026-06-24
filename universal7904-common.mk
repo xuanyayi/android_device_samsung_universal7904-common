@@ -54,13 +54,11 @@ PRODUCT_COPY_FILES += \
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1200
 
-# Camera
+# Camera. Keep this gated during LOS22 bring-up so rescue packages can disable
+# it, but enable it by default from the wisdom product after provider, preview,
+# capture, and narrow vendorimage validation.
+ifeq ($(TARGET_ENABLE_CAMERA_BRINGUP),true)
 PRODUCT_PACKAGES += \
-    camera.device@1.0-impl \
-    camera.device@3.2-impl \
-    camera.device@3.3-impl \
-    camera.device@3.4-impl \
-    camera.device@3.5-impl \
     android.hardware.camera.device@3.6.vendor \
     android.hardware.camera.provider@2.4.vendor \
     android.hardware.camera.provider@2.5.vendor \
@@ -73,6 +71,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml
+endif
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -93,15 +92,27 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_PACKAGES += \
+    android.frameworks.sensorservice@1.0.vendor \
     android.hardware.gnss@2.1.vendor
 
 # Graphics
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.hardware.egl=mali \
+    ro.hardware.gralloc=exynos7904 \
+    ro.hardware.hwcomposer=exynos7904 \
+    ro.hardware.vulkan=mali
+
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl-2.1 \
-    libgui_vendor
+    libgui_vendor \
+    libion \
+    libion.vendor \
+    libprocessgroup_shim \
+    libshim_graphicsmapper_legacy_lockasync \
+    libutils-v32
 
 # Health
 PRODUCT_PACKAGES += \
@@ -122,6 +133,7 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     fstab.enableswap \
+    init_sensor_factory \
     init.exynos7904.rc \
     init.exynos7904.usb.rc \
     init.gps.rc \
@@ -146,6 +158,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml
 
 # Memtrack
@@ -172,10 +185,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.vibrator.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vibrator.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
+    frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
@@ -184,14 +199,16 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.samsung-libperfmgr
+    android.hardware.power-service.pixel-libperfmgr
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/power/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Protobuf
 PRODUCT_PACKAGES += \
+    libprotobuf-cpp-full-3.9.1-vendorcompat \
     libprotobuf-cpp-full-vendorcompat \
+    libprotobuf-cpp-lite-3.9.1-vendorcompat \
     libprotobuf-cpp-lite-vendorcompat
 
 # Public Libraries
@@ -210,7 +227,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.4.vendor \
     android.hardware.radio.config@1.2.vendor \
-    android.hardware.radio.deprecated@1.0.vendor
+    android.hardware.radio.deprecated@1.0.vendor \
+    libnetutils.vendor \
+    libsqlite.vendor \
+    vendor.samsung.hardware.radio@2.0.vendor \
+    vendor.samsung.hardware.radio@2.1.vendor
 
 # SamsungDoze
 PRODUCT_PACKAGES += \
@@ -238,12 +259,11 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
     hardware/google/pixel \
     hardware/samsung \
-    hardware/samsung/aidl/power-libperfmgr
+    hardware/samsung_slsi/libbt
 
 # Speed profile services and wifi-service to reduce RAM and storage
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
-PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := frameworks/base/config/boot-image-profile.txt
 
 # Task profiles
 PRODUCT_COPY_FILES += \
@@ -264,13 +284,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-service.samsung
 
-# VNDK
-PRODUCT_PACKAGES += \
-    libutils-v32
-
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service.legacy \
+    android.hardware.wifi-service \
     hostapd \
     WifiOverlay \
     wpa_supplicant
@@ -280,8 +296,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
 
-# Experimental userspace IMS bring-up. QualifiedNetworksService is not present
-# on this LOS20 tree, so do not add a fake product package for it.
+# Experimental userspace IMS bring-up.
 PRODUCT_PACKAGES += \
     Iwlan \
     PhhIms
