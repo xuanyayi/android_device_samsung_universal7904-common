@@ -29,4 +29,9 @@
     <!-- Should we vibrate on an icon animation of the shelf. This should only be active if the
      vibrator is capable of subtle vibrations -->
     <bool name="config_vibrateOnIconAnimation">true</bool>
+
+    <!-- The SM-P205 vibration motor makes the Android 16 brightness slider's continuous
+         low-tick haptics feel like an unintended vibration. Keep global haptics enabled, but
+         disable this slider-only texture feedback. -->
+    <bool name="config_enableBrightnessSliderHaptics">false</bool>
 </resources>

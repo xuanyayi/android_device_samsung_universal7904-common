@@ -6,6 +6,8 @@ typeattribute hal_power_default mlstrustedsubject;
 
 set_prop(hal_power_default, vendor_power_prop)
 
+hal_client_domain(hal_power_default, hal_thermal)
+
 allow hal_power_default appdomain:process { getsched setsched };
 allow hal_power_default self:capability sys_nice;
 allow hal_power_default surfaceflinger:process setsched;

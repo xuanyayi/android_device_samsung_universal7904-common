@@ -31,7 +31,6 @@
 /data/vendor/mediadrm(/.*)?                                 u:object_r:mediadrm_data_file:s0
 /data/camera(/.*)?                                          u:object_r:camera_data_file:s0
 /data/vendor/camera(/.*)?                                   u:object_r:camera_vendor_data_file:s0
-/data/hostapd(/.*)?                                         u:object_r:hostapd_data_file:s0
 /data/vendor/log/wifi(/.*)?                                 u:object_r:vendor_wlbtd_log_file:s0
 
 # Root files copied into target_files for system image generation.
