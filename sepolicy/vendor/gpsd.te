@@ -4,6 +4,7 @@ binder_call(gpsd, servicemanager)
 allow gpsd hal_system_suspend_service:service_manager find;
 allow gpsd gps_device:chr_file { ioctl open read write };
 allow gpsd self:capability net_raw;
+allow gpsd self:capability2 block_suspend;
 allow gpsd sysfs_sec_gps:file { getattr open read };
 allow gpsd sysfs_wake_lock:file { open write };
 
