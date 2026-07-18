@@ -129,6 +129,8 @@ on post-fs-data
     chmod 0220 /sys/class/sec/tsp/cmd
     chown root system /sys/class/sec/tsp/input/enabled
     chmod 0660 /sys/class/sec/tsp/input/enabled
+    chown root system /sys/class/sec/sec_epen/aot_enable
+    chmod 0220 /sys/class/sec/sec_epen/aot_enable
 
 # Permissions Camera
     mkdir /data/vendor/camera 0770 cameraserver system
@@ -537,6 +539,8 @@ on property:sys.boot_completed=1
     chmod 0220 /sys/class/sec/tsp/cmd
     chown root system /sys/class/sec/tsp/input/enabled
     chmod 0660 /sys/class/sec/tsp/input/enabled
+    chown root system /sys/class/sec/sec_epen/aot_enable
+    chmod 0220 /sys/class/sec/sec_epen/aot_enable
 
 # Permission for flashlight control for HAL3.3
 # The Istor espresso board does not have the flash led h/w, So the below permission line are blocked.

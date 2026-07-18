@@ -1,6 +1,8 @@
 allow hal_power_default sysfs_decon:dir search;
 allow hal_power_default sysfs_touchscreen_writable:dir r_dir_perms;
 allow hal_power_default sysfs_touchscreen_writable:file rw_file_perms;
+allow hal_power_default sysfs_spen:dir search;
+allow hal_power_default sysfs_spen:file rw_file_perms;
 
 typeattribute hal_power_default mlstrustedsubject;
 
