@@ -2,5 +2,5 @@
 ro.crypto.volume.filenames_mode=aes-256-cts
 
 # LMKD
-ro.lmk.use_minfree_levels=true
-ro.lmk.use_psi=false
+ro.lmk.use_minfree_levels=false
+ro.lmk.use_psi=true
