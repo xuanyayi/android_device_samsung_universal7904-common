@@ -9,6 +9,13 @@
             "Controller": "cpuset",
             "Path": "foreground"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params": {
+            "Controller": "schedtune",
+            "Path": "foreground"
+          }
         }
       ]
     },
@@ -19,6 +26,13 @@
           "Name": "JoinCgroup",
           "Params": {
             "Controller": "cpuset",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params": {
+            "Controller": "schedtune",
             "Path": "top-app"
           }
         }

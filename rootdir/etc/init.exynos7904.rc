@@ -319,7 +319,8 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
+    # HZ=250: keep the governor sampling period aligned to four jiffies.
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 16000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 40000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 1144000
@@ -355,7 +356,7 @@ on boot
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/hispeed_freq 1144000
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/target_loads 80
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/above_hispeed_delay "19000 1352000:39000"
-    write /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_rate 20000
+    write /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_rate 16000
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/timer_slack 20000
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/min_sample_time 40000
     write /sys/devices/system/cpu/cpu6/cpufreq/interactive/go_hispeed_load 89
@@ -379,6 +380,20 @@ on boot
     write /dev/cpuset/top-app/selective_boost 1
     write /dev/cpuset/foreground/selective_boost 1
     write /dev/cpuset/cameraserver/selective_boost 1
+
+# Android SchedTune groups
+    chown root system /dev/stune/foreground/schedtune.boost
+    chown root system /dev/stune/foreground/schedtune.prefer_idle
+    chown root system /dev/stune/top-app/schedtune.boost
+    chown root system /dev/stune/top-app/schedtune.prefer_idle
+    chmod 0664 /dev/stune/foreground/schedtune.boost
+    chmod 0664 /dev/stune/foreground/schedtune.prefer_idle
+    chmod 0664 /dev/stune/top-app/schedtune.boost
+    chmod 0664 /dev/stune/top-app/schedtune.prefer_idle
+    write /dev/stune/foreground/schedtune.boost 0
+    write /dev/stune/foreground/schedtune.prefer_idle 1
+    write /dev/stune/top-app/schedtune.boost 10
+    write /dev/stune/top-app/schedtune.prefer_idle 1
 
 # For Prio Pinning
     write /dev/cpuset/top-app/prio_pinning 1
